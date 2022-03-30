@@ -3109,7 +3109,7 @@ GameObject:
   - component: {fileID: 8723872182619893278}
   - component: {fileID: 8723872182619893277}
   m_Layer: 5
-  m_Name: MenuOpciones
+  m_Name: MenuAdaptaciones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

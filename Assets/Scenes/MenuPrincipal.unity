@@ -1200,7 +1200,7 @@ PrefabInstance:
       objectReference: {fileID: 881498593}
     - target: {fileID: 8723872182619893267, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
       propertyPath: m_Name
-      value: MenuOpciones
+      value: MenuAdaptaciones
       objectReference: {fileID: 0}
     - target: {fileID: 8723872182619893267, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
       propertyPath: m_IsActive
@@ -1289,6 +1289,10 @@ PrefabInstance:
     - target: {fileID: 8723872182619893276, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723872182762485322, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
+      propertyPath: m_Name
+      value: AdaptacionesManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}

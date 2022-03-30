@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpcionesManager : MonoBehaviour
+public class AdaptacionesManager: MonoBehaviour
 {
     static public bool pictogramas;
     static public bool avisar;

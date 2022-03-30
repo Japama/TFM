@@ -10,12 +10,12 @@ public class MenuManager : MonoBehaviour
 
     public void NuevaPartida()
     {
-        SceneManager.LoadSceneAsync("Nueva Partida");
+        SceneManager.LoadSceneAsync("Nivel1");
     }
 
     public void IrAlMenu()
     {
-        SceneManager.LoadScene("Pantalla Inicial");
+        SceneManager.LoadScene("MenuPrincipal");
     }
 
     public void IrAOpciones()
@@ -26,6 +26,11 @@ public class MenuManager : MonoBehaviour
     public void CerrarOpciones()
     {
         MenuOpciones.SetActive(false);
+    }
+
+    public void AbrirOpciones()
+    {
+        MenuOpciones.SetActive(true);
     }
 
 

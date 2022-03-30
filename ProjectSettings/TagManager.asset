@@ -41,3 +41,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3448665675
+    locked: 0
+  - name: "Decoraci\xF3nTrasera"
+    uniqueID: 2263064513
+    locked: 0
+  - name: Nivel
+    uniqueID: 2229106447
+    locked: 0
+  - name: "Decoraci\xF3nMedia"
+    uniqueID: 2935606059
+    locked: 0
+  - name: Jugador
+    uniqueID: 3616995609
+    locked: 0
+  - name: "Decoraci\xF3nFrontal"
+    uniqueID: 226221767
+    locked: 0
