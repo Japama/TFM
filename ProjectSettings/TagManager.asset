@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Suelo
   - Dash
+  - Paredes
+  - Escaleras
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,7 @@ TagManager:
   - Suelo
   - Water
   - UI
-  - 
+  - Escaleras
   - 
   - 
   - 
@@ -49,9 +51,6 @@ TagManager:
   - name: "Decoraci\xF3nTrasera"
     uniqueID: 2263064513
     locked: 0
-  - name: Nivel
-    uniqueID: 2229106447
-    locked: 0
   - name: "Decoraci\xF3nMedia"
     uniqueID: 2935606059
     locked: 0
@@ -60,4 +59,7 @@ TagManager:
     locked: 0
   - name: "Decoraci\xF3nFrontal"
     uniqueID: 226221767
+    locked: 0
+  - name: Suelo
+    uniqueID: 2229106447
     locked: 0
