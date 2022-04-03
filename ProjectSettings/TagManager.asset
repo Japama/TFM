@@ -8,6 +8,10 @@ TagManager:
   - Dash
   - Paredes
   - Escaleras
+  - Enemigo
+  - WeakPoint
+  - DashWeakPoint
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

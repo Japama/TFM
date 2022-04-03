@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour
     public float jumpForce = 8f;
     public float maxSpeed = 5f;
     public float dashSpeed;
-    //public GameObject bullet;
+    public GameObject spawnPoint;
 
     [SerializeField] private LayerMask sueloLayerMask;
 
@@ -136,6 +136,22 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (dash)
+        {
+            if (dashTime > dashChargeTime)
+                if (loockAtRigth)
+                    rb.velocity = rb.transform.right * dashSpeed * Time.fixedDeltaTime;
+                else
+                    rb.velocity = rb.transform.right * dashSpeed * Time.fixedDeltaTime * -1;
+        }
+        if (climbVertical)
+            ClimbVertical(climbUp);
+        if (climbHorizontal)
+            ClimbHorizontal(climbRigth);
+    }
+
     private void ClimbHorizontal(bool right)
     {
         if (right)
@@ -157,22 +173,6 @@ public class PlayerManager : MonoBehaviour
         anim.SetBool("Cargar", true);
         dash = true;
         rb.velocity = new Vector2(0, 0);
-    }
-
-    private void FixedUpdate()
-    {
-        if (dash)
-        {
-            if (dashTime > dashChargeTime)
-                if (loockAtRigth)
-                    rb.velocity = rb.transform.right * dashSpeed * Time.fixedDeltaTime;
-                else
-                    rb.velocity = rb.transform.right * dashSpeed * Time.fixedDeltaTime * -1;
-        }
-        if (climbVertical)
-            ClimbVertical(climbUp);
-        if (climbHorizontal)
-            ClimbHorizontal(climbRigth);
     }
 
     private void ExecuteDash()
@@ -255,16 +255,27 @@ public class PlayerManager : MonoBehaviour
             rb.gravityScale = 0;
             anim.SetBool("Escalar", true);
         }
-        //if (collision.gameObject.CompareTag("Goomba") || collision.gameObject.CompareTag("Water"))
-        //{
-        //    anim.SetBool("Dead", true);
-        //    //OnKilled?.Invoke();
-        //}
-        //if (collision.gameObject.CompareTag("Finish"))
-        //{
-        //    //OnReachedEndOfLevel?.Invoke();
-        //    rb.velocity = new Vector2(0, rb.velocity.y);
-        //}
+        if (collision.gameObject.CompareTag("Enemigo"))
+        {
+            anim.SetBool("Herido", true);
+            //OnKilled?.Invoke();
+        }
+        if (collision.gameObject.CompareTag("WeakPoint"))
+        {
+            collision.gameObject.GetComponentInParent<Animator>().SetBool("Hit", true);
+        }
+        if (collision.gameObject.CompareTag("DashWeakPoint"))
+        {
+            if(dash)
+                collision.gameObject.GetComponentInParent<Animator>().SetBool("Hit", true);
+            else
+                anim.SetBool("Herido", true);
+        }
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            //OnReachedEndOfLevel?.Invoke();
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
 
     }
 
