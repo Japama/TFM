@@ -6,10 +6,10 @@ using UnityEngine;
 public class ManuAdaptacionesManager: MonoBehaviour
 {
     [Header("Pictogramas")]
-    public GameObject pictogramasSiOn;
-    public GameObject pictogramasSiOff;
-    public GameObject pictogramasNoOn;
-    public GameObject pictogramasNoOff;
+    public GameObject PictogramasSiOn;
+    public GameObject PictogramasSiOff;
+    public GameObject PictogramasNoOn;
+    public GameObject PictogramasNoOff;
     [Space(3)]
 
     [Header("Avisar")]
@@ -41,16 +41,16 @@ public class ManuAdaptacionesManager: MonoBehaviour
 
     public void SwitchPictogramas()
     {
-        AdaptacionesManager.pictogramas = !AdaptacionesManager.pictogramas;
+        AdaptacionesManager.Pictogramas = !AdaptacionesManager.Pictogramas;
         UpdatePictogramas();
     }
 
     private void UpdatePictogramas()
     {
-        pictogramasSiOn.SetActive(AdaptacionesManager.pictogramas);
-        pictogramasSiOff.SetActive(!AdaptacionesManager.pictogramas);
-        pictogramasNoOn.SetActive(!AdaptacionesManager.pictogramas);
-        pictogramasNoOff.SetActive(AdaptacionesManager.pictogramas);
+        PictogramasSiOn.SetActive(AdaptacionesManager.Pictogramas);
+        PictogramasSiOff.SetActive(!AdaptacionesManager.Pictogramas);
+        PictogramasNoOn.SetActive(!AdaptacionesManager.Pictogramas);
+        PictogramasNoOff.SetActive(AdaptacionesManager.Pictogramas);
     }
 
     public void SwitchAvisoMonstruos()
@@ -69,16 +69,16 @@ public class ManuAdaptacionesManager: MonoBehaviour
 
     public void SwitchMostrarControles()
     {
-        AdaptacionesManager.mostrarControles = !AdaptacionesManager.mostrarControles;
+        AdaptacionesManager.MostrarControles = !AdaptacionesManager.MostrarControles;
         UpdateMostrarControles();
     }
 
     private void UpdateMostrarControles()
     {
-        MostrarControlesSiOn.SetActive(AdaptacionesManager.mostrarControles);
-        MostrarControlesSiOff.SetActive(!AdaptacionesManager.mostrarControles);
-        MostrarControlesNoOn.SetActive(!AdaptacionesManager.mostrarControles);
-        MostrarControlesNoOff.SetActive(AdaptacionesManager.mostrarControles);
+        MostrarControlesSiOn.SetActive(AdaptacionesManager.MostrarControles);
+        MostrarControlesSiOff.SetActive(!AdaptacionesManager.MostrarControles);
+        MostrarControlesNoOn.SetActive(!AdaptacionesManager.MostrarControles);
+        MostrarControlesNoOff.SetActive(AdaptacionesManager.MostrarControles);
     }
 
     public void SwitchAtenuarSonidos()

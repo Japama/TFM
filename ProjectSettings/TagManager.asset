@@ -13,6 +13,7 @@ TagManager:
   - DashWeakPoint
   - SpawnPoint
   - TurnPoint
+  - CanvasScreenControllers
   layers:
   - Default
   - TransparentFX
