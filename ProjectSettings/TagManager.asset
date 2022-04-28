@@ -12,6 +12,7 @@ TagManager:
   - WeakPoint
   - DashWeakPoint
   - SpawnPoint
+  - TurnPoint
   layers:
   - Default
   - TransparentFX
