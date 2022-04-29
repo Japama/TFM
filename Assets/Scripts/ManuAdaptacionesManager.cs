@@ -97,16 +97,16 @@ public class ManuAdaptacionesManager: MonoBehaviour
 
     public void SwitchVidasYcheckpoints()
     {
-        AdaptacionesManager.vidasYcheckpoints = !AdaptacionesManager.vidasYcheckpoints;
+        AdaptacionesManager.VidasYcheckpoints = !AdaptacionesManager.VidasYcheckpoints;
         UpdateVidasYcheckpoints();
     }
 
     private void UpdateVidasYcheckpoints()
     {
-        VidasYcheckpointsSiOn.SetActive(AdaptacionesManager.vidasYcheckpoints);
-        VidasYcheckpointsSiOff.SetActive(!AdaptacionesManager.vidasYcheckpoints);
-        VidasYcheckpointsNoOn.SetActive(!AdaptacionesManager.vidasYcheckpoints);
-        VidasYcheckpointsNoOff.SetActive(AdaptacionesManager.vidasYcheckpoints);
+        VidasYcheckpointsSiOn.SetActive(AdaptacionesManager.VidasYcheckpoints);
+        VidasYcheckpointsSiOff.SetActive(!AdaptacionesManager.VidasYcheckpoints);
+        VidasYcheckpointsNoOn.SetActive(!AdaptacionesManager.VidasYcheckpoints);
+        VidasYcheckpointsNoOff.SetActive(AdaptacionesManager.VidasYcheckpoints);
     }
 
     private void Start()

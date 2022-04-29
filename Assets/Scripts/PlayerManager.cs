@@ -48,19 +48,24 @@ public class PlayerManager : MonoBehaviour
 
     public void Hitted()
     {
-        if (lives <= 0)
-        {
+        if (!AdaptacionesManager.VidasYcheckpoints)
             transform.position = spawnPoint.transform.position;
-            lives = 3;
-            lifesManager.RefillLifes();
+        else
+        {
+            if (lives <= 0)
+            {
+                transform.position = spawnPoint.transform.position;
+                lives = 3;
+                lifesManager.RefillLifes();
+            }
+            else
+            {
+                lives--;
+                immunity = true;
+                lifesManager.RemoveLife();
+                Invoke(nameof(SetNotInmunity), 1);
+            }
         }
-        else{
-            lives--;
-            immunity = true;
-            lifesManager.RemoveLife();
-            Invoke(nameof(SetNotInmunity), 2);
-        }
-
     }
 
 

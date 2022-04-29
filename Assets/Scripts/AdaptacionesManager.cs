@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,28 @@ public class AdaptacionesManager : MonoBehaviour
     public static bool avisar = true;
 
     public static bool atenuarSonidos = true;
-    public static bool vidasYcheckpoints = true;
 
-    private static GameObject controlesEnPantalla;
+
+    private static bool vidasYcheckpoints = false;
+    public static bool VidasYcheckpoints
+    {
+        get { return vidasYcheckpoints; }
+        set
+        {
+            if (vidasYcheckpoints == value) return;
+            vidasYcheckpoints = value;
+            ShowLifesInScreen();
+        }
+    }
+
+    private static GameObject lifesManager;
+    private static void ShowLifesInScreen()
+    {
+        if (lifesManager == null)
+            lifesManager = GameObject.FindGameObjectWithTag("LifesManager");
+        if (lifesManager != null)
+            lifesManager.SetActive(vidasYcheckpoints);
+    }
 
     private static bool pictogramas = false;
     public static bool Pictogramas
@@ -26,6 +46,8 @@ public class AdaptacionesManager : MonoBehaviour
         }
     }
 
+    #region Controles
+    private static GameObject controlesEnPantalla;
     private static bool mostrarControles = true;
     public static bool MostrarControles
     {
@@ -50,9 +72,8 @@ public class AdaptacionesManager : MonoBehaviour
     {
         if (controlesEnPantalla == null)
             controlesEnPantalla = GameObject.FindGameObjectWithTag("CanvasScreenControllers");
-        if(controlesEnPantalla != null)
+        if (controlesEnPantalla != null)
             controlesEnPantalla.SetActive(mostrarControles);
-        Debug.Log("Mostrar pictogramas: " + mostrarControles.ToString());
     }
-
+    #endregion
 }

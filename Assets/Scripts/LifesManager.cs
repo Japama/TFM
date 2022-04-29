@@ -64,4 +64,9 @@ public class LifesManager : MonoBehaviour
         }
         NumberOFLifes = MaxLifes;
     }
+
+    public void ShowOrHideLivesInScreen()
+    {
+
+    }
 }
