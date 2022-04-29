@@ -19,9 +19,7 @@ public class HitBehaviour : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetBool("Herido", false);
-        var spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        animator.gameObject.transform.position = spawnPoints.FirstOrDefault().transform.position;
+        animator.gameObject.GetComponent<PlayerManager>().Hitted();
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

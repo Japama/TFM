@@ -10,7 +10,6 @@ public class PlayerManager : MonoBehaviour
     public float jumpForce = 8f;
     public float maxSpeed = 5f;
     public float dashSpeed;
-    public GameObject spawnPoint;
 
     [SerializeField] private LayerMask sueloLayerMask;
 
@@ -37,8 +36,34 @@ public class PlayerManager : MonoBehaviour
     private bool dashCooldown = false;
     private float dashCurrentCooldown = 1.5f;
 
+    private GameObject spawnPoint;
+    private int lives = 3;
+    private bool immunity = false;
+
+    private LifesManager lifesManager;
+
     //public Action OnKilled;
     //public Action OnReachedEndOfLevel;
+
+
+    public void Hitted()
+    {
+        if (lives <= 0)
+        {
+            transform.position = spawnPoint.transform.position;
+            lives = 3;
+            lifesManager.RefillLifes();
+        }
+        else{
+            lives--;
+            immunity = true;
+            lifesManager.RemoveLife();
+            Invoke(nameof(SetNotInmunity), 2);
+        }
+
+    }
+
+
 
     private void Awake()
     {
@@ -52,22 +77,22 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        lifesManager = GameObject.FindGameObjectWithTag("LifesManager").GetComponent<LifesManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (loockAtRigth)
-        {
-            if (rb.velocity.x < 0.15f)
-                anim.SetBool("Correr", false);
-        }
+
+        if (dashCooldown)
+            RechargeDash();
+
+        if (rb.velocity.x < 0.15f && rb.velocity.x > -0.15f)
+            anim.SetBool("Correr", false);
+
+        if (dash)
+            ExecuteDash();
         else
-        {
-            if (rb.velocity.x > -0.15f)
-                anim.SetBool("Correr", false);
-        }
-        if (!dash)
         {
             if (IsFalling())
             {
@@ -81,59 +106,48 @@ public class PlayerManager : MonoBehaviour
                 if (Input.GetKey(KeyCode.Space))
                     ChargeDahs();
             if (canClimb)
-            {
-                climbVertical = climbHorizontal = false;
-
-                climbVertical = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S);
-                if (climbVertical)
-                    climbUp = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W);
-
-                climbHorizontal= Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D);
-                if (climbHorizontal)
-                    climbRigth = Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D);
-            } 
+                Climb();
             else
-            {
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-                    MoveBackward();
-
-                if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-                    MoveForward();
-
-                if (IsGrounded())
-                {
-                    if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-                        Jump();
-                }
-
-            }
+                CheckMovement();
         }
-        else
+    }
+
+    private void RechargeDash()
+    {
+        dashCurrentCooldown -= Time.deltaTime;
+        if (dashCurrentCooldown <= 0)
         {
-            if (dashTime > dashDuration)
-            {
-
-                dash = false;
-                dashTime = 0;
-                anim.SetBool("Cargar", false);
-                dashCooldown = true;
-                rb.velocity = new Vector2(0, 0);
-            }
-            else
-            {
-                dashTime += Time.deltaTime;
-            }
+            dashCooldown = false;
+            dashCurrentCooldown = dashCooldownTime;
         }
-        if (dashCooldown)
+    }
+
+    private void CheckMovement()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+            MoveBackward();
+
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            MoveForward();
+
+        if (IsGrounded())
         {
-            dashCurrentCooldown -= Time.deltaTime;
-            if (dashCurrentCooldown <= 0)
-            {
-                dashCooldown = false;
-                dashCurrentCooldown = dashCooldownTime;
-            }
-
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+                Jump();
         }
+    }
+
+    private void Climb()
+    {
+        climbVertical = climbHorizontal = false;
+
+        climbVertical = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S);
+        if (climbVertical)
+            climbUp = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W);
+
+        climbHorizontal = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D);
+        if (climbHorizontal)
+            climbRigth = Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D);
     }
 
     private void FixedUpdate()
@@ -162,7 +176,7 @@ public class PlayerManager : MonoBehaviour
 
     private void ClimbVertical(bool up)
     {
-        if(up)
+        if (up)
             rb.transform.position = new Vector3(rb.transform.position.x, rb.transform.position.y + Time.fixedDeltaTime * 3, rb.transform.position.z);
         else
             rb.transform.position = new Vector3(rb.transform.position.x, rb.transform.position.y - Time.fixedDeltaTime * 3, rb.transform.position.z);
@@ -177,7 +191,19 @@ public class PlayerManager : MonoBehaviour
 
     private void ExecuteDash()
     {
+        if (dashTime > dashDuration)
+        {
 
+            dash = false;
+            dashTime = 0;
+            anim.SetBool("Cargar", false);
+            dashCooldown = true;
+            rb.velocity = new Vector2(0, 0);
+        }
+        else
+        {
+            dashTime += Time.deltaTime;
+        }
     }
 
     //private void ThrowAttack()
@@ -246,6 +272,11 @@ public class PlayerManager : MonoBehaviour
         return raycast.collider != null;
     }
 
+    private void SetNotInmunity()
+    {
+        immunity = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Escaleras"))
@@ -255,28 +286,24 @@ public class PlayerManager : MonoBehaviour
             rb.gravityScale = 0;
             anim.SetBool("Escalar", true);
         }
-        if (collision.gameObject.CompareTag("Enemigo"))
-        {
-            anim.SetBool("Herido", true);
-            //OnKilled?.Invoke();
-        }
+
+        if (collision.gameObject.CompareTag("Enemigo") && !immunity)
+            anim.SetTrigger("Herido");
+
         if (collision.gameObject.CompareTag("WeakPoint"))
-        {
             collision.gameObject.GetComponentInParent<Animator>().SetBool("Hit", true);
-        }
+
         if (collision.gameObject.CompareTag("DashWeakPoint"))
-        {
-            if(dash)
+            if (dash)
                 collision.gameObject.GetComponentInParent<Animator>().SetBool("Hit", true);
             else
                 anim.SetBool("Herido", true);
-        }
-        if (collision.gameObject.CompareTag("Finish"))
-        {
-            //OnReachedEndOfLevel?.Invoke();
-            rb.velocity = new Vector2(0, rb.velocity.y);
-        }
 
+        if (collision.gameObject.CompareTag("Finish"))
+            rb.velocity = new Vector2(0, rb.velocity.y);
+
+        if (collision.gameObject.CompareTag("SpawnPoint"))
+            spawnPoint = collision.gameObject;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -289,10 +316,5 @@ public class PlayerManager : MonoBehaviour
             anim.SetBool("Escalar", false);
         }
 
-    }
-
-    public void Revive()
-    {
-        anim.SetBool("Dead", false);
     }
 }
