@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour
 
     public void NuevaPartida()
     {
-        SceneManager.LoadSceneAsync("Nivel1");
+        SceneManager.LoadSceneAsync("Tutorial");
     }
 
     public void IrAlMenu()

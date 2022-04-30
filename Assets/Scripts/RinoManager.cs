@@ -15,12 +15,15 @@ public class RinoManager : MonoBehaviour
     private Animator anim;
     private bool turn;
 
+    private WarningZoneController warningZoneController;
+
     [SerializeField]
     private bool goLeft;
 
     // Start is called before the first frame update
     void Start()
     {
+        warningZoneController = GetComponentInParent<WarningZoneController>();
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -75,10 +78,16 @@ public class RinoManager : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!gameObject.CompareTag("WeakPoint") && !gameObject.CompareTag("DashWeakPoint") && other.gameObject.CompareTag("TurnPoint"))
-         {
+        {
             StartStop();
             int direction = goLeft ? 1 : -1;
             gameObject.transform.position = new Vector3(gameObject.transform.position.x + 0.2f * direction, gameObject.transform.position.y, gameObject.transform.position.z);
         }
+    }
+
+
+    private void OnDestroy()
+    {
+        warningZoneController.DeleteEnemy(gameObject);        
     }
 }

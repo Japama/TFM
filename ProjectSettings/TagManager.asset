@@ -15,6 +15,7 @@ TagManager:
   - TurnPoint
   - CanvasScreenControllers
   - LifesManager
+  - AvisoEnemigosManager
   layers:
   - Default
   - TransparentFX

@@ -41,6 +41,7 @@ public class PlayerManager : MonoBehaviour
     private bool immunity = false;
 
     private LifesManager lifesManager;
+    private AvisoEnemigosManager avisoEnemigosManager;
 
     //public Action OnKilled;
     //public Action OnReachedEndOfLevel;
@@ -49,12 +50,13 @@ public class PlayerManager : MonoBehaviour
     public void Hitted()
     {
         if (!AdaptacionesManager.VidasYcheckpoints)
-            transform.position = spawnPoint.transform.position;
+            Respawn();
         else
         {
+            SetLifesManager();
             if (lives <= 0)
             {
-                transform.position = spawnPoint.transform.position;
+                Respawn();
                 lives = 3;
                 lifesManager.RefillLifes();
             }
@@ -68,7 +70,11 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-
+    private void Respawn()
+    {
+        transform.position = spawnPoint.transform.position;
+        SoundManager.PlaySound(SoundsEnum.Spawn);
+    }
 
     private void Awake()
     {
@@ -82,7 +88,17 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lifesManager = GameObject.FindGameObjectWithTag("LifesManager").GetComponent<LifesManager>();
+        SetLifesManager();
+        avisoEnemigosManager = GameObject.FindGameObjectWithTag("AvisoEnemigosManager").GetComponent<AvisoEnemigosManager>();
+    }
+
+    private void SetLifesManager()
+    {
+        if(lifesManager == null)
+        {
+            var lifesManagerGameObject = GameObject.FindGameObjectWithTag("LifesManager");
+            lifesManager = lifesManagerGameObject != null ? lifesManagerGameObject.GetComponent<LifesManager>() : null;
+        }
     }
 
     // Update is called once per frame
@@ -94,6 +110,8 @@ public class PlayerManager : MonoBehaviour
 
         if (rb.velocity.x < 0.15f && rb.velocity.x > -0.15f)
             anim.SetBool("Correr", false);
+        else
+            anim.SetBool("Correr", true);
 
         if (dash)
             ExecuteDash();
@@ -105,7 +123,11 @@ public class PlayerManager : MonoBehaviour
                 anim.SetBool("Saltar", false);
             }
             else
+            {
+                if (anim.GetBool("Caer"))
+                    SoundManager.PlaySound(SoundsEnum.Fall);
                 anim.SetBool("Caer", false);
+            }
 
             if (!dashCooldown)
                 if (Input.GetKey(KeyCode.Space))
@@ -137,7 +159,7 @@ public class PlayerManager : MonoBehaviour
 
         if (IsGrounded())
         {
-            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
                 Jump();
         }
     }
@@ -161,9 +183,9 @@ public class PlayerManager : MonoBehaviour
         {
             if (dashTime > dashChargeTime)
                 if (loockAtRigth)
-                    rb.velocity = rb.transform.right * dashSpeed * Time.fixedDeltaTime;
+                    rb.velocity = dashSpeed * Time.fixedDeltaTime * rb.transform.right;
                 else
-                    rb.velocity = rb.transform.right * dashSpeed * Time.fixedDeltaTime * -1;
+                    rb.velocity = -1 * dashSpeed * Time.fixedDeltaTime * rb.transform.right;
         }
         if (climbVertical)
             ClimbVertical(climbUp);
@@ -191,7 +213,8 @@ public class PlayerManager : MonoBehaviour
     {
         anim.SetBool("Cargar", true);
         dash = true;
-        rb.velocity = new Vector2(0, 0);
+        //rb.velocity = new Vector2(0, 0);
+        SoundManager.PlaySound(SoundsEnum.Dash);
     }
 
     private void ExecuteDash()
@@ -203,7 +226,10 @@ public class PlayerManager : MonoBehaviour
             dashTime = 0;
             anim.SetBool("Cargar", false);
             dashCooldown = true;
-            rb.velocity = new Vector2(0, 0);
+            if (loockAtRigth)
+                rb.velocity = new Vector2(maxSpeed, 0);
+            else
+                rb.velocity = new Vector2(-maxSpeed, 0);
         }
         else
         {
@@ -257,7 +283,7 @@ public class PlayerManager : MonoBehaviour
         Vector2 velocity = new Vector2(rb.velocity.x, rb.velocity.y);
         velocity.y = jumpForce;
         rb.velocity = velocity;
-        //SoundManager.PlaySound("Saltar");
+        SoundManager.PlaySound(SoundsEnum.Jump);
     }
 
     private bool IsFalling()

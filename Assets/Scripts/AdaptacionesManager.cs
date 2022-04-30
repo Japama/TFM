@@ -7,48 +7,15 @@ public class AdaptacionesManager : MonoBehaviour
 {
 
     public static bool avisar = true;
-
     public static bool atenuarSonidos = true;
 
-
-    private static bool vidasYcheckpoints = false;
-    public static bool VidasYcheckpoints
-    {
-        get { return vidasYcheckpoints; }
-        set
-        {
-            if (vidasYcheckpoints == value) return;
-            vidasYcheckpoints = value;
-            ShowLifesInScreen();
-        }
-    }
-
-    private static GameObject lifesManager;
-    private static void ShowLifesInScreen()
-    {
-        if (lifesManager == null)
-            lifesManager = GameObject.FindGameObjectWithTag("LifesManager");
-        if (lifesManager != null)
-            lifesManager.SetActive(vidasYcheckpoints);
-    }
-
-    private static bool pictogramas = false;
-    public static bool Pictogramas
-    {
-        get
-        {
-            return pictogramas;
-        }
-        set
-        {
-            if (pictogramas == value) return;
-            pictogramas = value;
-        }
-    }
-
-    #region Controles
-    private static GameObject controlesEnPantalla;
     private static bool mostrarControles = true;
+    private static bool pictogramas = true;
+    private static bool vidasYcheckpoints = true;
+
+    private static GameObject controlesEnPantalla;
+    private static GameObject lifesManager;
+
     public static bool MostrarControles
     {
         get
@@ -57,23 +24,64 @@ public class AdaptacionesManager : MonoBehaviour
         }
         set
         {
-            if (mostrarControles == value) return;
             mostrarControles = value;
-            MostrarOcultarControles();
+            SwitchShowControllers();
         }
     }
+
+    public static bool Pictogramas
+    {
+        get
+        {
+            return pictogramas;
+        }
+        set
+        {
+            pictogramas = value;
+        }
+    }
+
+    public static bool VidasYcheckpoints
+    {
+        get { return vidasYcheckpoints; }
+        set
+        {
+            vidasYcheckpoints = value;
+            SwitchLifesInScreen();
+        }
+    }
+
 
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
 
-    private static void MostrarOcultarControles()
+    private void Start()
+    {
+
+    }
+
+    private static void SwitchShowControllers()
     {
         if (controlesEnPantalla == null)
             controlesEnPantalla = GameObject.FindGameObjectWithTag("CanvasScreenControllers");
         if (controlesEnPantalla != null)
             controlesEnPantalla.SetActive(mostrarControles);
     }
-    #endregion
+
+    private static void SwitchLifesInScreen()
+    {
+        if (lifesManager == null)
+            lifesManager = GameObject.FindGameObjectWithTag("LifesManager");
+        if (lifesManager != null)
+            lifesManager.SetActive(vidasYcheckpoints);
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        MostrarControles = mostrarControles;
+        Pictogramas = pictogramas;
+        VidasYcheckpoints = vidasYcheckpoints;
+    }
 }

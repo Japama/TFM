@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &15239787 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8723872182442372937, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
+  m_PrefabInstance: {fileID: 8723872182495520692}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &158779815 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8723872182619893267, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
@@ -640,6 +645,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815758808}
   m_CullTransparentMesh: 1
+--- !u!1 &827290609 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8723872182537304571, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
+  m_PrefabInstance: {fileID: 8723872182495520692}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &881498592
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +838,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1059958595 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8723872181971879155, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
+  m_PrefabInstance: {fileID: 8723872182495520692}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1093847173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1187,6 +1202,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1669210229}
   m_CullTransparentMesh: 1
+--- !u!1 &2131274478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8723872181619169808, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
+  m_PrefabInstance: {fileID: 8723872182495520692}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8487018223432736758
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1347,6 +1367,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8723872182762485172, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
+      propertyPath: PictogramasNoOn
+      value: 
+      objectReference: {fileID: 15239787}
+    - target: {fileID: 8723872182762485172, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
+      propertyPath: PictogramasSiOn
+      value: 
+      objectReference: {fileID: 1059958595}
+    - target: {fileID: 8723872182762485172, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
+      propertyPath: PictogramasNoOff
+      value: 
+      objectReference: {fileID: 827290609}
+    - target: {fileID: 8723872182762485172, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
+      propertyPath: PictogramasSiOff
+      value: 
+      objectReference: {fileID: 2131274478}
     - target: {fileID: 8723872182762485322, guid: 4a26a064b5819854b94b8f5da199ada5, type: 3}
       propertyPath: m_Name
       value: MenuAdaptacionesManager
