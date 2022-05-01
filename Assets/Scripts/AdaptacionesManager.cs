@@ -7,11 +7,35 @@ public class AdaptacionesManager : MonoBehaviour
 {
 
     public static bool avisar = true;
-    public static bool atenuarSonidos = true;
 
+
+    private static bool atenuarSonidos = true;
     private static bool mostrarControles = true;
     private static bool pictogramas = true;
     private static bool vidasYcheckpoints = true;
+
+    private static AudioMixerManager audioMixerManager;
+
+    public static bool AtenuarSonidos
+    {
+        get { return atenuarSonidos; }
+        set
+        {
+            atenuarSonidos = value;
+            SwitchAttenuateSounds();
+        }
+    }
+
+    private static void SwitchAttenuateSounds()
+    {
+        if (audioMixerManager == null)
+            audioMixerManager = GameObject.FindGameObjectWithTag("AudioMixerManager").GetComponent<AudioMixerManager>();
+        if (audioMixerManager != null)
+            if (atenuarSonidos)
+                audioMixerManager.SetAdaptedAudioMixer();
+            else
+                audioMixerManager.SetNormalAudioMixer();
+    }
 
     private static GameObject controlesEnPantalla;
     private static GameObject lifesManager;
@@ -57,11 +81,6 @@ public class AdaptacionesManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-
-    }
-
     private static void SwitchShowControllers()
     {
         if (controlesEnPantalla == null)
@@ -80,6 +99,7 @@ public class AdaptacionesManager : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
+        AtenuarSonidos = atenuarSonidos;
         MostrarControles = mostrarControles;
         Pictogramas = pictogramas;
         VidasYcheckpoints = vidasYcheckpoints;

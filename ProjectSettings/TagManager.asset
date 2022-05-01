@@ -16,6 +16,8 @@ TagManager:
   - CanvasScreenControllers
   - LifesManager
   - AvisoEnemigosManager
+  - AudioMixerManager
+  - SoundManager
   layers:
   - Default
   - TransparentFX

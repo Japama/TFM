@@ -7,14 +7,50 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
     public GameObject MenuOpciones;
+    public GameObject MenuPausa;
+
+    private void Start()
+    {
+
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (MenuOpciones.activeSelf)
+                CerrarOpciones();
+            else if (SceneManager.GetActiveScene().name != "MenuPrincipal")
+            {
+                if (MenuPausa.activeSelf)
+                    ResumeGame();
+                else
+                    PauseGame();
+            }
+        }
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        MenuPausa.SetActive(false);
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0;
+        MenuPausa.SetActive(true);
+    }
 
     public void NuevaPartida()
     {
+        ResumeGame();
         SceneManager.LoadSceneAsync("Tutorial");
     }
 
     public void IrAlMenu()
     {
+        ResumeGame();
         SceneManager.LoadScene("MenuPrincipal");
     }
 
@@ -36,11 +72,11 @@ public class MenuManager : MonoBehaviour
 
     public void SalirJuego()
     {
-    #if UNITY_EDITOR
-            Debug.Log("Saliendo del juego...");
-            EditorApplication.isPlaying = false;
-    #else
+#if UNITY_EDITOR
+        Debug.Log("Saliendo del juego...");
+        EditorApplication.isPlaying = false;
+#else
                 Application.Quit();
-    #endif
+#endif
     }
 }

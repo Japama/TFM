@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
+
+
+
     public static AudioClip deathSound, jumpSound, victorySound, hitSound, fallSound, spawnSound, dashSound;
     static AudioSource audioSource;
+    public static AudioMixerGroup NormalMixer;
+    public static AudioMixerGroup AdaptationMixer;
 
     public AudioClip[] MusicSections;
     // Music files which share the identifier 'Section' go in here. Example track: 'Adventure Inn Section 2.wav'.
@@ -46,6 +52,10 @@ public class SoundManager : MonoBehaviour
     {
         
     }
+
+    public static void SetAdaptationAudioMixer() => audioSource.outputAudioMixerGroup = AdaptationMixer;
+
+    public static void SetNormalAudioMixer() => audioSource.outputAudioMixerGroup = NormalMixer;
 
 
     public static void PlaySound (SoundsEnum clip)

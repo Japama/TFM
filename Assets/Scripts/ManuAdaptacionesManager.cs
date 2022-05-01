@@ -83,16 +83,16 @@ public class ManuAdaptacionesManager: MonoBehaviour
 
     public void SwitchAtenuarSonidos()
     {
-        AdaptacionesManager.atenuarSonidos = !AdaptacionesManager.atenuarSonidos;
+        AdaptacionesManager.AtenuarSonidos = !AdaptacionesManager.AtenuarSonidos;
         UpdateActenuarSonidos();
     }
 
     private void UpdateActenuarSonidos()
     {
-        AtenuarSonidosSiOn.SetActive(AdaptacionesManager.atenuarSonidos);
-        AtenuarSonidosSiOff.SetActive(!AdaptacionesManager.atenuarSonidos);
-        AtenuarSonidosNoOn.SetActive(!AdaptacionesManager.atenuarSonidos);
-        AtenuarSonidosNoOff.SetActive(AdaptacionesManager.atenuarSonidos);
+        AtenuarSonidosSiOn.SetActive(AdaptacionesManager.AtenuarSonidos);
+        AtenuarSonidosSiOff.SetActive(!AdaptacionesManager.AtenuarSonidos);
+        AtenuarSonidosNoOn.SetActive(!AdaptacionesManager.AtenuarSonidos);
+        AtenuarSonidosNoOff.SetActive(AdaptacionesManager.AtenuarSonidos);
     }
 
     public void SwitchVidasYcheckpoints()
