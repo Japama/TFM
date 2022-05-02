@@ -18,6 +18,7 @@ TagManager:
   - AvisoEnemigosManager
   - AudioMixerManager
   - SoundManager
+  - Spikes
   layers:
   - Default
   - TransparentFX

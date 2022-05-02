@@ -11,6 +11,8 @@ public class PlayerManager : MonoBehaviour
     public float maxSpeed = 5f;
     public float dashSpeed;
 
+    public bool inElevator;
+
     [SerializeField] private LayerMask sueloLayerMask;
 
     private Animator anim;
@@ -38,7 +40,9 @@ public class PlayerManager : MonoBehaviour
 
     private GameObject spawnPoint;
     private int lives = 3;
-    private bool immunity = false;
+    private readonly int maxLives = 3;
+    public bool immunity = false;
+    private bool fadeOut = true;
 
     private LifesManager lifesManager;
     private AvisoEnemigosManager avisoEnemigosManager;
@@ -56,17 +60,17 @@ public class PlayerManager : MonoBehaviour
             SetLifesManager();
             if (lives <= 0)
             {
-                Respawn();
-                lives = 3;
+                lives = maxLives;
                 lifesManager.RefillLifes();
+                Respawn();
             }
             else
             {
-                lives--;
-                immunity = true;
                 lifesManager.RemoveLife();
-                Invoke(nameof(SetNotInmunity), 1);
+                lives--;
             }
+            immunity = true;
+            Invoke(nameof(SetNotInmunity), 2.5f);
         }
     }
 
@@ -94,7 +98,7 @@ public class PlayerManager : MonoBehaviour
 
     private void SetLifesManager()
     {
-        if(lifesManager == null)
+        if (lifesManager == null)
         {
             var lifesManagerGameObject = GameObject.FindGameObjectWithTag("LifesManager");
             lifesManager = lifesManagerGameObject != null ? lifesManagerGameObject.GetComponent<LifesManager>() : null;
@@ -138,6 +142,8 @@ public class PlayerManager : MonoBehaviour
                 CheckMovement();
         }
     }
+
+
 
     private void RechargeDash()
     {
@@ -191,6 +197,18 @@ public class PlayerManager : MonoBehaviour
             ClimbVertical(climbUp);
         if (climbHorizontal)
             ClimbHorizontal(climbRigth);
+        if (immunity)
+        {
+            if (fadeOut)
+                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a - 0.1f);
+            else
+                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a + 0.1f);
+
+            if (sprite.color.a <= 0)
+                fadeOut = false;
+            if (sprite.color.a >= 1)
+                fadeOut = true;
+        }
     }
 
     private void ClimbHorizontal(bool right)
@@ -288,7 +306,7 @@ public class PlayerManager : MonoBehaviour
 
     private bool IsFalling()
     {
-        return rb.velocity.y < -0.01;
+        return !inElevator && rb.velocity.y < -2.5;
     }
 
     private bool IsGrounded()
@@ -306,6 +324,7 @@ public class PlayerManager : MonoBehaviour
     private void SetNotInmunity()
     {
         immunity = false;
+        sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -328,13 +347,19 @@ public class PlayerManager : MonoBehaviour
             if (dash)
                 collision.gameObject.GetComponentInParent<Animator>().SetBool("Hit", true);
             else
-                anim.SetBool("Herido", true);
+                anim.SetTrigger("Herido");
 
         if (collision.gameObject.CompareTag("Finish"))
             rb.velocity = new Vector2(0, rb.velocity.y);
 
         if (collision.gameObject.CompareTag("SpawnPoint"))
             spawnPoint = collision.gameObject;
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemigo") && !immunity)
+            anim.SetTrigger("Herido");
     }
 
     private void OnTriggerExit2D(Collider2D collision)

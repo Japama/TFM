@@ -3268,10 +3268,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d306944dc1dad4281590ac44fc26d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pictogramasSiOn: {fileID: 8723872181971879155}
-  pictogramasSiOff: {fileID: 8723872181619169808}
-  pictogramasNoOn: {fileID: 8723872182442372937}
-  pictogramasNoOff: {fileID: 8723872182537304571}
+  PictogramasSiOn: {fileID: 8723872181971879155}
+  PictogramasSiOff: {fileID: 8723872181619169808}
+  PictogramasNoOn: {fileID: 8723872182442372937}
+  PictogramasNoOff: {fileID: 8723872182537304571}
   AvisarSiOn: {fileID: 8723872181479985454}
   AvisarSiOff: {fileID: 8723872181689394057}
   AvisarNoOn: {fileID: 8723872182426151083}
