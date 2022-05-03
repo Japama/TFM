@@ -7,6 +7,8 @@ public class AvisoEnemigosManager : MonoBehaviour
 
     [SerializeField]
     GameObject rinoWarning;
+    [SerializeField]
+    GameObject pigWarning;
 
     public static AvisoEnemigosManager Instance { get; private set; }
 
@@ -31,9 +33,11 @@ public class AvisoEnemigosManager : MonoBehaviour
             case EnemyTypeEnum.Rino:
                 rinoWarning.SetActive(activate);
                 break;
+            case EnemyTypeEnum.AngryPig:
+                pigWarning.SetActive(activate);
+                break;
             default:
                 break;
         }
-
     }
 }

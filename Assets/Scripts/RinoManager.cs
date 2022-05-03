@@ -77,12 +77,12 @@ public class RinoManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("TurnPoint"))
-        {
+        //if (other.gameObject.CompareTag("TurnPoint"))
+        //{
             StartStop();
             int direction = goLeft ? 1 : -1;
             gameObject.transform.position = new Vector3(gameObject.transform.position.x + 0.2f * direction, gameObject.transform.position.y, gameObject.transform.position.z);
-        }
+        //}
     }
 
 

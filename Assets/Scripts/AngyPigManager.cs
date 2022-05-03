@@ -96,15 +96,15 @@ public class AngyPigManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("TurnPoint") && gameObject.CompareTag("Enemigo"))
-        {
+        //if (other.gameObject.CompareTag("TurnPoint") && gameObject.CompareTag("Enemigo"))
+        //{
             int direction = goLeft ? 1 : -1;
             gameObject.transform.position = new Vector3(gameObject.transform.position.x + 0.3f * direction, gameObject.transform.position.y, gameObject.transform.position.z);
             if (walk)
                 StartStop();
             if (run)
                 Turn();
-        }
+        //}
     }
 
     private void OnDestroy()

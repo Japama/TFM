@@ -38,6 +38,7 @@ public class PlayerManager : MonoBehaviour
     private bool dashCooldown = false;
     private float dashCurrentCooldown = 1.5f;
 
+    [SerializeField]
     private GameObject spawnPoint;
     private GameObject checkPoint;
     private int lives = 3;
@@ -54,7 +55,7 @@ public class PlayerManager : MonoBehaviour
     public void GetHit()
     {
         //if (!immunity)
-            anim.SetTrigger("Herido");
+        anim.SetTrigger("Herido");
     }
 
     public void Hitted()
@@ -82,7 +83,10 @@ public class PlayerManager : MonoBehaviour
 
     private void Respawn()
     {
-        transform.position = spawnPoint.transform.position;
+        if (AdaptacionesManager.VidasYcheckpoints)
+            transform.position = checkPoint.transform.position;
+        else
+            transform.position = spawnPoint.transform.position;
         SoundManager.PlaySound(SoundsEnum.Spawn);
     }
 
@@ -344,7 +348,7 @@ public class PlayerManager : MonoBehaviour
             rb.velocity = new Vector2(0, rb.velocity.y);
 
         if (collision.gameObject.CompareTag("SpawnPoint"))
-            spawnPoint = collision.gameObject;
+            checkPoint = collision.gameObject;
     }
 
     private void OnTriggerStay2D(Collider2D collision)
