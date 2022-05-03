@@ -33,12 +33,13 @@ public class PlayerManager : MonoBehaviour
     private readonly float dashDuration = 0.4f;
     private readonly float dashChargeTime = 0.15f;
     private readonly float dashCooldownTime = 1.5f;
-    private bool dash = false;
+    public bool dash = false;
     private float dashTime = 0f;
     private bool dashCooldown = false;
     private float dashCurrentCooldown = 1.5f;
 
     private GameObject spawnPoint;
+    private GameObject checkPoint;
     private int lives = 3;
     private readonly int maxLives = 3;
     public bool immunity = false;
@@ -50,6 +51,11 @@ public class PlayerManager : MonoBehaviour
     //public Action OnKilled;
     //public Action OnReachedEndOfLevel;
 
+    public void GetHit()
+    {
+        //if (!immunity)
+            anim.SetTrigger("Herido");
+    }
 
     public void Hitted()
     {
@@ -142,8 +148,6 @@ public class PlayerManager : MonoBehaviour
                 CheckMovement();
         }
     }
-
-
 
     private void RechargeDash()
     {
@@ -255,21 +259,6 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    //private void ThrowAttack()
-    //{
-    //    float shotRight = loockAtRigth ? 1f : -1f;
-    //    Vector3 bulletInitialPosition = new Vector3(this.transform.position.x + shotRight, this.transform.position.y);
-    //    //var shot = Instantiate(bullet, bulletInitialPosition, this.transform.rotation);
-    //    //shot.GetComponent<Rigidbody2D>().velocity = new Vector2(shotRight, 0f);
-    //    canThrow = false;
-    //    Invoke("RestoreCanThrow", 1.5f);
-    //}
-
-    //private void RestoreCanThrow()
-    //{
-    //    canThrow = true;
-    //}
-
     private void MoveForward()
     {
         anim.SetBool("Correr", true);
@@ -337,17 +326,19 @@ public class PlayerManager : MonoBehaviour
             anim.SetBool("Escalar", true);
         }
 
+
+        //if (collision.gameObject.CompareTag("WeakPoint"))
+        //    collision.gameObject.GetComponentInParent<Animator>().SetBool("Hit", true);
+
+
         if (collision.gameObject.CompareTag("Enemigo") && !immunity)
             anim.SetTrigger("Herido");
 
-        if (collision.gameObject.CompareTag("WeakPoint"))
-            collision.gameObject.GetComponentInParent<Animator>().SetBool("Hit", true);
-
-        if (collision.gameObject.CompareTag("DashWeakPoint"))
-            if (dash)
-                collision.gameObject.GetComponentInParent<Animator>().SetBool("Hit", true);
-            else
-                anim.SetTrigger("Herido");
+        //if (collision.gameObject.CompareTag("DashWeakPoint"))
+        //    if (dash)
+        //        collision.gameObject.GetComponentInParent<Animator>().SetBool("Hit", true);
+        //    else
+        //        anim.SetTrigger("Herido");
 
         if (collision.gameObject.CompareTag("Finish"))
             rb.velocity = new Vector2(0, rb.velocity.y);

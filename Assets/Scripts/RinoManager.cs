@@ -77,7 +77,7 @@ public class RinoManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!gameObject.CompareTag("WeakPoint") && !gameObject.CompareTag("DashWeakPoint") && other.gameObject.CompareTag("TurnPoint"))
+        if (other.gameObject.CompareTag("TurnPoint"))
         {
             StartStop();
             int direction = goLeft ? 1 : -1;
@@ -89,5 +89,10 @@ public class RinoManager : MonoBehaviour
     private void OnDestroy()
     {
         warningZoneController.DeleteEnemy(gameObject);        
+    }
+
+    public void Hitted()
+    {
+        anim.SetTrigger("Hit");
     }
 }

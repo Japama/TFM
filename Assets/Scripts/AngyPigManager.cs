@@ -6,14 +6,16 @@ public class AngyPigManager : MonoBehaviour
 {
 
     public float speed;
-    public int maxSpeed;
+    public int maxWalkSpeed;
+    public int maxRunSpeed;
     private Rigidbody2D rb;
-    private SpriteRenderer sprite;
-    private bool run = false;
+    private bool run;
+    private bool walk;
     private float timeCurrentAction = 0;
     private float actionDuration = 4f;
     private Animator anim;
     private bool turn;
+    private bool immunity = false;
 
     private WarningZoneController warningZoneController;
 
@@ -25,8 +27,8 @@ public class AngyPigManager : MonoBehaviour
     {
         warningZoneController = GetComponentInParent<WarningZoneController>();
         rb = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        StartStop();
     }
 
     // Update is called once per frame
@@ -35,22 +37,25 @@ public class AngyPigManager : MonoBehaviour
         if (turn)
             Turn();
 
-        if (run)
+        if (walk || run)
             Move();
     }
 
     private void FixedUpdate()
     {
-        timeCurrentAction += Time.fixedDeltaTime;
-        if (timeCurrentAction >= actionDuration)
+        if (!run)
         {
-            StartStop();
-            timeCurrentAction = 0;
-            actionDuration = Random.Range(4f, 8f);
-            if (run)
+            timeCurrentAction += Time.fixedDeltaTime;
+            if (timeCurrentAction >= actionDuration)
             {
-                turn = true;
-                goLeft = !goLeft;
+                StartStop();
+                timeCurrentAction = 0;
+                actionDuration = Random.Range(4f, 8f);
+                if (walk)
+                {
+                    turn = true;
+                    goLeft = !goLeft;
+                }
             }
         }
     }
@@ -58,41 +63,72 @@ public class AngyPigManager : MonoBehaviour
     private void StartStop()
     {
         rb.velocity = new Vector2();
-        run = !run;
-        anim.SetBool("Run", run);
+        if (!run)
+        {
+            walk = !walk;
+            anim.SetBool("Walk", walk);
+        }
     }
 
     private void Move()
     {
+
         var right = transform.right;
-        if (rb.velocity.x > -maxSpeed && rb.velocity.x < maxSpeed)
-            rb.velocity += speed * Time.deltaTime * new Vector2(right.x * speed, right.y);
+        if (walk)
+        {
+            if (rb.velocity.x > -maxWalkSpeed && rb.velocity.x < maxWalkSpeed)
+                rb.velocity += speed * Time.deltaTime * new Vector2(right.x * speed, right.y);
+        }
+        else
+        {
+            if (rb.velocity.x > -maxRunSpeed && rb.velocity.x < maxRunSpeed)
+                rb.velocity += speed * Time.deltaTime * new Vector2(right.x * speed, right.y);
+        }
     }
 
     private void Turn()
     {
+        rb.velocity = new Vector2();
         transform.eulerAngles = transform.eulerAngles + 180f * Vector3.up;
         turn = false;
+        goLeft = !goLeft;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!gameObject.CompareTag("WeakPoint") && !gameObject.CompareTag("DashWeakPoint"))
+        if (other.gameObject.CompareTag("TurnPoint") && gameObject.CompareTag("Enemigo"))
         {
-            StartStop();
             int direction = goLeft ? 1 : -1;
-            gameObject.transform.position = new Vector3(gameObject.transform.position.x + 0.2f * direction, gameObject.transform.position.y, gameObject.transform.position.z);
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x + 0.3f * direction, gameObject.transform.position.y, gameObject.transform.position.z);
+            if (walk)
+                StartStop();
+            if (run)
+                Turn();
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Colisión");
-    }
-
 
     private void OnDestroy()
     {
         warningZoneController.DeleteEnemy(gameObject);
+    }
+
+
+    public void Hitted()
+    {
+        if (run)
+            anim.SetTrigger("Hit2");
+        else
+        {
+            anim.SetTrigger("Hit1");
+            walk = false;
+            run = true;
+            immunity = true;
+            Invoke(nameof(SetNotInmunity), 1.5f);
+        }
+    }
+
+    private void SetNotInmunity()
+    {
+        immunity = false;
     }
 }
