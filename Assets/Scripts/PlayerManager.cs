@@ -11,8 +11,6 @@ public class PlayerManager : MonoBehaviour
     public float maxSpeed = 5f;
     public float dashSpeed;
 
-    public bool inElevator;
-
     [SerializeField] private LayerMask sueloLayerMask;
 
     private Animator anim;
@@ -48,6 +46,8 @@ public class PlayerManager : MonoBehaviour
 
     private LifesManager lifesManager;
     private AvisoEnemigosManager avisoEnemigosManager;
+
+    private bool inElevator;
 
     //public Action OnKilled;
     //public Action OnReachedEndOfLevel;
@@ -88,6 +88,8 @@ public class PlayerManager : MonoBehaviour
         else
             transform.position = spawnPoint.transform.position;
         SoundManager.PlaySound(SoundsEnum.Spawn);
+        rb.velocity = new Vector2(0, 0);
+        sprite.flipX = false;
     }
 
     private void Awake()
@@ -299,7 +301,10 @@ public class PlayerManager : MonoBehaviour
 
     private bool IsFalling()
     {
-        return !inElevator && rb.velocity.y < -2.5;
+        if (inElevator)
+            return rb.velocity.y < -2.5f;
+        else
+            return rb.velocity.y < -0.1f;
     }
 
     private bool IsGrounded()
@@ -349,6 +354,13 @@ public class PlayerManager : MonoBehaviour
 
         if (collision.gameObject.CompareTag("SpawnPoint"))
             checkPoint = collision.gameObject;
+
+        if (collision.gameObject.CompareTag("ElevatorZone"))
+        {
+            inElevator = true;
+            anim.SetBool("Caer", false);
+        }
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -367,5 +379,7 @@ public class PlayerManager : MonoBehaviour
             anim.SetBool("Escalar", false);
         }
 
+        if (collision.gameObject.CompareTag("ElevatorZone"))
+            inElevator = false;
     }
 }

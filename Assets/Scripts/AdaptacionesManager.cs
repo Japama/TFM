@@ -10,9 +10,9 @@ public class AdaptacionesManager : MonoBehaviour
 
 
     private static bool atenuarSonidos = true;
-    private static bool mostrarControles = false;
+    private static bool mostrarControles = true;
     private static bool pictogramas = true;
-    private static bool vidasYcheckpoints = false;
+    private static bool vidasYcheckpoints = true;
 
     private static AudioMixerManager audioMixerManager;
 

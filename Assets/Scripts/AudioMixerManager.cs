@@ -12,21 +12,30 @@ public class AudioMixerManager : MonoBehaviour
 
     private void Start()
     {
+        GetAudioSource();
+    }
+
+    private void GetAudioSource()
+    {
+        if (audioSource != null)
+            return;
         audioSource = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<AudioSource>();
     }
 
     public void SetNormalAudioMixer()
     {
+        GetAudioSource();
         audioSource.outputAudioMixerGroup = NormalAudioMixer;
     }
 
     public void SetAdaptedAudioMixer()
     {
+        GetAudioSource();
         audioSource.outputAudioMixerGroup = AdaptedAudioMixer;
     }
 
     private void OnLevelWasLoaded(int level)
     {
-        audioSource = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<AudioSource>();
+        GetAudioSource();
     }
 }

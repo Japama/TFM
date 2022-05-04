@@ -33,12 +33,14 @@ public class MenuManager : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1;
+        AudioListener.pause = false;
         MenuPausa.SetActive(false);
     }
 
     private void PauseGame()
     {
         Time.timeScale = 0;
+        AudioListener.pause = true;
         MenuPausa.SetActive(true);
     }
 

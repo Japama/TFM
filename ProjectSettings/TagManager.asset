@@ -19,6 +19,7 @@ TagManager:
   - AudioMixerManager
   - SoundManager
   - Spikes
+  - ElevatorZone
   layers:
   - Default
   - TransparentFX

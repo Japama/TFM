@@ -34,9 +34,6 @@ public class AngyPigManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (turn)
-            Turn();
-
         if (walk || run)
             Move();
     }
@@ -52,10 +49,7 @@ public class AngyPigManager : MonoBehaviour
                 timeCurrentAction = 0;
                 actionDuration = Random.Range(4f, 8f);
                 if (walk)
-                {
-                    turn = true;
-                    goLeft = !goLeft;
-                }
+                    Turn();
             }
         }
     }
@@ -96,15 +90,15 @@ public class AngyPigManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //if (other.gameObject.CompareTag("TurnPoint") && gameObject.CompareTag("Enemigo"))
-        //{
+        if (other.gameObject.CompareTag("TurnPoint"))
+        {
             int direction = goLeft ? 1 : -1;
-            gameObject.transform.position = new Vector3(gameObject.transform.position.x + 0.3f * direction, gameObject.transform.position.y, gameObject.transform.position.z);
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x + 0.2f * direction, gameObject.transform.position.y, gameObject.transform.position.z);
             if (walk)
                 StartStop();
             if (run)
                 Turn();
-        //}
+        }
     }
 
     private void OnDestroy()
@@ -123,7 +117,7 @@ public class AngyPigManager : MonoBehaviour
             walk = false;
             run = true;
             immunity = true;
-            Invoke(nameof(SetNotInmunity), 1.5f);
+            Invoke(nameof(SetNotInmunity), 2.5f);
         }
     }
 
