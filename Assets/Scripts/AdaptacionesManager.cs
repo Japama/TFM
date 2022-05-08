@@ -6,13 +6,26 @@ using UnityEngine;
 public class AdaptacionesManager : MonoBehaviour
 {
 
-    public static bool avisar = true;
-
-
+    private static bool avisar = true;
     private static bool atenuarSonidos = true;
     private static bool mostrarControles = true;
     private static bool pictogramas = true;
     private static bool vidasYcheckpoints = true;
+
+    public static bool Avisar
+    {
+        get { return avisar; }
+        set {
+            avisar = value;
+            if (!avisar)
+                DisableWarningZone();
+        }
+    }
+
+    private static void DisableWarningZone()
+    {
+        throw new NotImplementedException();
+    }
 
     private static AudioMixerManager audioMixerManager;
 
@@ -38,6 +51,7 @@ public class AdaptacionesManager : MonoBehaviour
     }
 
     private static GameObject controlesEnPantalla;
+    private static GameObject controlesEnPantallaPictogramas;
     private static GameObject lifesManager;
 
     public static bool MostrarControles
@@ -62,6 +76,8 @@ public class AdaptacionesManager : MonoBehaviour
         set
         {
             pictogramas = value;
+            if (mostrarControles)
+                SwitchShowControllers();
         }
     }
 
@@ -85,8 +101,30 @@ public class AdaptacionesManager : MonoBehaviour
     {
         if (controlesEnPantalla == null)
             controlesEnPantalla = GameObject.FindGameObjectWithTag("CanvasScreenControllers");
-        if (controlesEnPantalla != null)
-            controlesEnPantalla.SetActive(mostrarControles);
+        if (controlesEnPantallaPictogramas == null)
+            controlesEnPantallaPictogramas = GameObject.FindGameObjectWithTag("ControlesPantallaPictogramas");
+
+        if (mostrarControles)
+            if (pictogramas)
+            {
+                if (controlesEnPantallaPictogramas != null)
+                    controlesEnPantallaPictogramas.SetActive(mostrarControles);
+                if (controlesEnPantalla != null)
+                    controlesEnPantalla.SetActive(!mostrarControles);
+            }
+            else
+            {
+                if (controlesEnPantalla != null)
+                    controlesEnPantalla.SetActive(mostrarControles);
+                if (controlesEnPantallaPictogramas != null)
+                    controlesEnPantallaPictogramas.SetActive(!mostrarControles);
+            }
+
+        if (!mostrarControles)
+        {
+            controlesEnPantalla.SetActive(false);
+            controlesEnPantallaPictogramas.SetActive(false);
+        }
     }
 
     private static void SwitchLifesInScreen()

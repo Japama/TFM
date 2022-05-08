@@ -55,16 +55,16 @@ public class ManuAdaptacionesManager: MonoBehaviour
 
     public void SwitchAvisoMonstruos()
     {
-        AdaptacionesManager.avisar = !AdaptacionesManager.avisar;
+        AdaptacionesManager.Avisar = !AdaptacionesManager.Avisar;
         UpdateAvisoMonstruos();
     }
 
     private void UpdateAvisoMonstruos()
     {
-        AvisarSiOn.SetActive(AdaptacionesManager.avisar);
-        AvisarSiOff.SetActive(!AdaptacionesManager.avisar);
-        AvisarNoOn.SetActive(!AdaptacionesManager.avisar);
-        AvisarNoOff.SetActive(AdaptacionesManager.avisar);
+        AvisarSiOn.SetActive(AdaptacionesManager.Avisar);
+        AvisarSiOff.SetActive(!AdaptacionesManager.Avisar);
+        AvisarNoOn.SetActive(!AdaptacionesManager.Avisar);
+        AvisarNoOff.SetActive(AdaptacionesManager.Avisar);
     }
 
     public void SwitchMostrarControles()

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RinoManager : MonoBehaviour
 {
-
     public float speed;
     public int maxSpeed;
     private Rigidbody2D rb;
