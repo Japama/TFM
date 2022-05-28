@@ -10,5 +10,6 @@ public enum SoundsEnum
     Hit,
     Victory,
     Death,
-    Spawn
+    Spawn,
+    EmemyHitted
 }

@@ -23,6 +23,7 @@ TagManager:
   - ControlesPantallaPictogramas
   - EnemyZone
   - EnemyZoneProximity
+  - EnemyDeath
   layers:
   - Default
   - TransparentFX

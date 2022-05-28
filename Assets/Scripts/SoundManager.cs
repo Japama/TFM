@@ -8,7 +8,7 @@ public class SoundManager : MonoBehaviour
 
 
 
-    public static AudioClip deathSound, jumpSound, victorySound, hitSound, fallSound, spawnSound, dashSound;
+    public static AudioClip deathSound, jumpSound, victorySound, hitSound, fallSound, spawnSound, dashSound, ememyHitted;
     static AudioSource audioSource;
     public static AudioMixerGroup NormalMixer;
     public static AudioMixerGroup AdaptationMixer;
@@ -33,6 +33,7 @@ public class SoundManager : MonoBehaviour
         fallSound= Resources.Load<AudioClip>("Fall");
         dashSound = Resources.Load<AudioClip>("Dash");
         victorySound = Resources.Load<AudioClip>("Victory");
+        ememyHitted = Resources.Load<AudioClip>("EmemyHitted");
 
         audioSource = GetComponent<AudioSource>();
 
@@ -82,6 +83,9 @@ public class SoundManager : MonoBehaviour
                 break;
             case SoundsEnum.Spawn:
                 audioSource.PlayOneShot(spawnSound);
+                break;
+            case SoundsEnum.EmemyHitted:
+                audioSource.PlayOneShot(ememyHitted);
                 break;
             default:
                 break;

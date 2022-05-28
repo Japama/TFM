@@ -109,10 +109,15 @@ public class AngyPigManager : MonoBehaviour
 
     public void Hitted()
     {
+        SoundManager.PlaySound(SoundsEnum.EmemyHitted);
         if (run)
+        {
             anim.SetTrigger("Hit2");
+            transform.tag = "EnemyDeath";
+        }
         else
         {
+
             anim.SetTrigger("Hit1");
             walk = false;
             run = true;

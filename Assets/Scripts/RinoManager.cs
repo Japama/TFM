@@ -92,6 +92,8 @@ public class RinoManager : MonoBehaviour
 
     public void Hitted()
     {
+        SoundManager.PlaySound(SoundsEnum.EmemyHitted);
         anim.SetTrigger("Hit");
+        transform.tag = "EnemyDeath";
     }
 }

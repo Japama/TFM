@@ -177,7 +177,7 @@ public class PlayerManager : MonoBehaviour
     {
         var distance = Vector3.Distance(transform.position, center.position);
         var size = 20 / distance;
-        size = size < 0.4f ? 0.4f : size;
+        size = size < 0.2f ? 0.4f : size;
         size = size > 1 ? 1 : size;
         Vector3 sizeVector = new Vector3(size, size, size);
         AvisoEnemigosManager.Instance.SetWarningSize(enemyType, sizeVector);
