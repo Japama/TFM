@@ -32,6 +32,7 @@ public class PlayerManager : MonoBehaviour
     private readonly float dashChargeTime = 0.15f;
     private readonly float dashCooldownTime = 1.5f;
     public bool dash = false;
+
     private float dashTime = 0f;
     private bool dashCooldown = false;
     private float dashCurrentCooldown = 1.5f;
@@ -45,12 +46,32 @@ public class PlayerManager : MonoBehaviour
     private bool fadeOut = true;
 
     private LifesManager lifesManager;
-    private AvisoEnemigosManager avisoEnemigosManager;
+    private List<ActiveWarnings> activeWarnings;
 
     private bool inElevator;
 
+    private class ActiveWarnings {
+
+        public EnemyTypeEnum EnemyType;
+        public Transform Center;
+    }
+
     //public Action OnKilled;
     //public Action OnReachedEndOfLevel;
+
+    public void AddWarningController(EnemyTypeEnum enemyType, Transform center)
+    {
+        activeWarnings.Add(new ActiveWarnings()
+        {
+            EnemyType = enemyType,
+            Center = center
+        });
+    }
+
+    public void RemoveWarningController(EnemyTypeEnum enemyType)
+    {
+        activeWarnings = activeWarnings.Where(aw => aw.EnemyType != enemyType).ToList();
+    }
 
     public void GetHit()
     {
@@ -100,22 +121,15 @@ public class PlayerManager : MonoBehaviour
         dashTransform = dashSprite.gameObject.transform;
         anim = GetComponent<Animator>();
         collider2D = GetComponent<PolygonCollider2D>();
+        activeWarnings = new List<ActiveWarnings>();
     }
     // Start is called before the first frame update
     void Start()
     {
         SetLifesManager();
-        avisoEnemigosManager = GameObject.FindGameObjectWithTag("AvisoEnemigosManager").GetComponent<AvisoEnemigosManager>();
+        //AvisoEnemigosManager.Instance
     }
 
-    private void SetLifesManager()
-    {
-        if (lifesManager == null)
-        {
-            var lifesManagerGameObject = GameObject.FindGameObjectWithTag("LifesManager");
-            lifesManager = lifesManagerGameObject != null ? lifesManagerGameObject.GetComponent<LifesManager>() : null;
-        }
-    }
 
     // Update is called once per frame
     void Update()
@@ -152,6 +166,29 @@ public class PlayerManager : MonoBehaviour
                 Climb();
             else
                 CheckMovement();
+        }
+
+        if (activeWarnings.Count > 0)
+            foreach (var activeWarning in activeWarnings)
+                CalculateDistanceWithEnemyZone(activeWarning.EnemyType, activeWarning.Center);
+    }
+
+    private void CalculateDistanceWithEnemyZone(EnemyTypeEnum enemyType, Transform center)
+    {
+        var distance = Vector3.Distance(transform.position, center.position);
+        var size = 20 / distance;
+        size = size < 0.4f ? 0.4f : size;
+        size = size > 1 ? 1 : size;
+        Vector3 sizeVector = new Vector3(size, size, size);
+        AvisoEnemigosManager.Instance.SetWarningSize(enemyType, sizeVector);
+    }
+
+    private void SetLifesManager()
+    {
+        if (lifesManager == null)
+        {
+            var lifesManagerGameObject = GameObject.FindGameObjectWithTag("LifesManager");
+            lifesManager = lifesManagerGameObject != null ? lifesManagerGameObject.GetComponent<LifesManager>() : null;
         }
     }
 

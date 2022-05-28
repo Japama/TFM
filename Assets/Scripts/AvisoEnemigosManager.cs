@@ -5,10 +5,10 @@ using UnityEngine;
 public class AvisoEnemigosManager : MonoBehaviour
 {
 
-    [SerializeField]
-    GameObject rinoWarning;
-    [SerializeField]
-    GameObject pigWarning;
+    public GameObject rinoWarning;
+    public GameObject pigWarning;
+
+    public bool gettingCloser = false;
 
     public static AvisoEnemigosManager Instance { get; private set; }
 
@@ -26,8 +26,9 @@ public class AvisoEnemigosManager : MonoBehaviour
         }
     }
 
-    public void SwitchWarningZone(EnemyTypeEnum enemyTypeEnum ,bool activate)
+    public void SwitchWarningZone(EnemyTypeEnum enemyTypeEnum, bool activate)
     {
+        gettingCloser = activate;
         switch (enemyTypeEnum)
         {
             case EnemyTypeEnum.Rino:
@@ -35,6 +36,23 @@ public class AvisoEnemigosManager : MonoBehaviour
                 break;
             case EnemyTypeEnum.AngryPig:
                 pigWarning.SetActive(activate);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void SetWarningSize(EnemyTypeEnum enemyTypeEnum, Vector3 newSize)
+    {
+        switch (enemyTypeEnum)
+        {
+            case EnemyTypeEnum.Rino:
+                if (rinoWarning.transform.localScale.x < 1)
+                    rinoWarning.transform.localScale = newSize;
+                break;
+            case EnemyTypeEnum.AngryPig:
+                if (pigWarning.transform.localScale.x < 1)
+                    pigWarning.transform.localScale = newSize;
                 break;
             default:
                 break;
