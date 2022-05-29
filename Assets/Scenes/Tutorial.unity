@@ -38116,7 +38116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3696810074370957053, guid: f6cc67329308514478c304b08b8697da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.6699996
+      value: 6.37
       objectReference: {fileID: 0}
     - target: {fileID: 3696810074370957053, guid: f6cc67329308514478c304b08b8697da, type: 3}
       propertyPath: m_LocalPosition.z
@@ -38124,7 +38124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3696810075601908834, guid: f6cc67329308514478c304b08b8697da, type: 3}
       propertyPath: m_ScreenY
-      value: 0.7
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 3696810075601908834, guid: f6cc67329308514478c304b08b8697da, type: 3}
       propertyPath: m_TrackedObjectOffset.y
@@ -38152,7 +38152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3696810076160488539, guid: f6cc67329308514478c304b08b8697da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.6699996
+      value: 6.37
       objectReference: {fileID: 0}
     - target: {fileID: 3696810076160488539, guid: f6cc67329308514478c304b08b8697da, type: 3}
       propertyPath: m_LocalPosition.z
