@@ -24,6 +24,7 @@ TagManager:
   - EnemyZone
   - EnemyZoneProximity
   - EnemyDeath
+  - Turtle
   layers:
   - Default
   - TransparentFX

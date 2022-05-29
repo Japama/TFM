@@ -12,19 +12,25 @@ public class AdaptacionesManager : MonoBehaviour
     private static bool pictogramas = true;
     private static bool vidasYcheckpoints = true;
 
+    private static GameObject avisoEnemigos;
+
     public static bool Avisar
     {
         get { return avisar; }
-        set {
+        set
+        {
             avisar = value;
-            if (!avisar)
-                DisableWarningZone();
+            SwitchWarningZone();
         }
     }
 
-    private static void DisableWarningZone()
+    private static void SwitchWarningZone()
     {
-        throw new NotImplementedException();
+        if (avisoEnemigos == null)
+            avisoEnemigos = GameObject.FindGameObjectWithTag("AvisoEnemigosManager");
+        if(avisoEnemigos != null)
+            avisoEnemigos.SetActive(avisar);
+
     }
 
     private static AudioMixerManager audioMixerManager;
@@ -41,9 +47,7 @@ public class AdaptacionesManager : MonoBehaviour
 
     private static void SwitchAttenuateSounds()
     {
-        if (audioMixerManager == null)
-            audioMixerManager = GameObject.FindGameObjectWithTag("AudioMixerManager").GetComponent<AudioMixerManager>();
-        if (audioMixerManager != null)
+        if (GameObject.FindGameObjectWithTag("AudioMixerManager").TryGetComponent<AudioMixerManager>(out audioMixerManager))
             if (atenuarSonidos)
                 audioMixerManager.SetAdaptedAudioMixer();
             else
@@ -104,27 +108,24 @@ public class AdaptacionesManager : MonoBehaviour
         if (controlesEnPantallaPictogramas == null)
             controlesEnPantallaPictogramas = GameObject.FindGameObjectWithTag("ControlesPantallaPictogramas");
 
-        if (mostrarControles)
-            if (pictogramas)
-            {
-                if (controlesEnPantallaPictogramas != null)
+        if (controlesEnPantalla != null && controlesEnPantallaPictogramas != null)
+            if (mostrarControles)
+                if (pictogramas)
+                {
                     controlesEnPantallaPictogramas.SetActive(mostrarControles);
-                if (controlesEnPantalla != null)
                     controlesEnPantalla.SetActive(!mostrarControles);
-            }
+                }
+                else
+                {
+                    controlesEnPantalla.SetActive(mostrarControles);
+                    controlesEnPantallaPictogramas.SetActive(!mostrarControles);
+                }
+
             else
             {
-                if (controlesEnPantalla != null)
-                    controlesEnPantalla.SetActive(mostrarControles);
-                if (controlesEnPantallaPictogramas != null)
-                    controlesEnPantallaPictogramas.SetActive(!mostrarControles);
+                controlesEnPantalla.SetActive(false);
+                controlesEnPantallaPictogramas.SetActive(false);
             }
-
-        if (!mostrarControles)
-        {
-            controlesEnPantalla.SetActive(false);
-            controlesEnPantallaPictogramas.SetActive(false);
-        }
     }
 
     private static void SwitchLifesInScreen()
@@ -141,5 +142,6 @@ public class AdaptacionesManager : MonoBehaviour
         MostrarControles = mostrarControles;
         Pictogramas = pictogramas;
         VidasYcheckpoints = vidasYcheckpoints;
+        Avisar = Avisar;
     }
 }

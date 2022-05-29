@@ -50,7 +50,8 @@ public class PlayerManager : MonoBehaviour
 
     private bool inElevator;
 
-    private class ActiveWarnings {
+    private class ActiveWarnings
+    {
 
         public EnemyTypeEnum EnemyType;
         public Transform Center;
@@ -372,19 +373,8 @@ public class PlayerManager : MonoBehaviour
             anim.SetBool("Escalar", true);
         }
 
-
-        //if (collision.gameObject.CompareTag("WeakPoint"))
-        //    collision.gameObject.GetComponentInParent<Animator>().SetBool("Hit", true);
-
-
         if (collision.gameObject.CompareTag("Enemigo") && !immunity)
             anim.SetTrigger("Herido");
-
-        //if (collision.gameObject.CompareTag("DashWeakPoint"))
-        //    if (dash)
-        //        collision.gameObject.GetComponentInParent<Animator>().SetBool("Hit", true);
-        //    else
-        //        anim.SetTrigger("Herido");
 
         if (collision.gameObject.CompareTag("Finish"))
             rb.velocity = new Vector2(0, rb.velocity.y);
@@ -397,6 +387,16 @@ public class PlayerManager : MonoBehaviour
             inElevator = true;
             anim.SetBool("Caer", false);
         }
+
+        if (collision.gameObject.CompareTag("Turtle"))
+        {
+            var tm = collision.gameObject.GetComponent<TurtleManager>();
+            if (!immunity && tm.spikesOut || !dash)
+                anim.SetTrigger("Herido");
+            else
+                tm.Hitted();
+        }
+
 
     }
 

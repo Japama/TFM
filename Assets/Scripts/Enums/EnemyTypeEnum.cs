@@ -4,5 +4,5 @@ using UnityEngine;
 
 public enum EnemyTypeEnum
 {
-    Rino, AngryPig
+    Rino, AngryPig, Turtle
 }
