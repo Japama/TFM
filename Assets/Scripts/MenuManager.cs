@@ -8,26 +8,25 @@ public class MenuManager : MonoBehaviour
 {
     public GameObject MenuOpciones;
     public GameObject MenuPausa;
+    [SerializeField]
+    GameObject Preaviso;
 
-    private void Start()
-    {
-
-    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (MenuOpciones.activeSelf)
-                CerrarOpciones();
-            else if (SceneManager.GetActiveScene().name != "MenuPrincipal")
+        if (Preaviso == null || !Preaviso.activeSelf)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (MenuPausa.activeSelf)
-                    ResumeGame();
-                else
-                    PauseGame();
+                if (MenuOpciones.activeSelf)
+                    CerrarOpciones();
+                else if (SceneManager.GetActiveScene().name != "MenuPrincipal")
+                {
+                    if (MenuPausa.activeSelf)
+                        ResumeGame();
+                    else
+                        PauseGame();
+                }
             }
-        }
     }
 
     public void ResumeGame()
@@ -52,7 +51,7 @@ public class MenuManager : MonoBehaviour
 
     public void IrAlMenu()
     {
-        ResumeGame();
+        //ResumeGame();
         SceneManager.LoadScene("MenuPrincipal");
     }
 

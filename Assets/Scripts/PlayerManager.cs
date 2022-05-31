@@ -135,43 +135,45 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (dashCooldown)
-            RechargeDash();
-
-        if (rb.velocity.x < 0.15f && rb.velocity.x > -0.15f)
-            anim.SetBool("Correr", false);
-        else
-            anim.SetBool("Correr", true);
-
-        if (dash)
-            ExecuteDash();
-        else
+        if(Time.timeScale != 0)
         {
-            if (IsFalling())
-            {
-                anim.SetBool("Caer", true);
-                anim.SetBool("Saltar", false);
-            }
+            if (dashCooldown)
+                RechargeDash();
+
+            if (rb.velocity.x < 0.15f && rb.velocity.x > -0.15f)
+                anim.SetBool("Correr", false);
+            else
+                anim.SetBool("Correr", true);
+
+            if (dash)
+                ExecuteDash();
             else
             {
-                if (anim.GetBool("Caer"))
-                    SoundManager.PlaySound(SoundsEnum.Fall);
-                anim.SetBool("Caer", false);
+                if (IsFalling())
+                {
+                    anim.SetBool("Caer", true);
+                    anim.SetBool("Saltar", false);
+                }
+                else
+                {
+                    if (anim.GetBool("Caer"))
+                        SoundManager.PlaySound(SoundsEnum.Fall);
+                    anim.SetBool("Caer", false);
+                }
+
+                if (!dashCooldown)
+                    if (Input.GetKey(KeyCode.Space))
+                        ChargeDahs();
+                if (canClimb)
+                    Climb();
+                else
+                    CheckMovement();
             }
 
-            if (!dashCooldown)
-                if (Input.GetKey(KeyCode.Space))
-                    ChargeDahs();
-            if (canClimb)
-                Climb();
-            else
-                CheckMovement();
+            if (activeWarnings.Count > 0)
+                foreach (var activeWarning in activeWarnings)
+                    CalculateDistanceWithEnemyZone(activeWarning.EnemyType, activeWarning.Center);
         }
-
-        if (activeWarnings.Count > 0)
-            foreach (var activeWarning in activeWarnings)
-                CalculateDistanceWithEnemyZone(activeWarning.EnemyType, activeWarning.Center);
     }
 
     private void CalculateDistanceWithEnemyZone(EnemyTypeEnum enemyType, Transform center)
