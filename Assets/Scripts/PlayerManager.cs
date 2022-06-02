@@ -135,7 +135,11 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.timeScale != 0)
+
+        if(Input.GetKey(KeyCode.K))
+            SoundManager.PlaySound(SoundsEnum.Jump);
+
+        if (Time.timeScale != 0)
         {
             if (dashCooldown)
                 RechargeDash();
