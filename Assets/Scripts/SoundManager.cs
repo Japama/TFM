@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -9,7 +10,8 @@ public class SoundManager : MonoBehaviour
 
 
     public static AudioClip deathSound, jumpSound, victorySound, hitSound, fallSound, spawnSound, dashSound, ememyHitted;
-    static AudioSource audioSource;
+    static AudioSource audioSourceClip;
+    static AudioSource audioSourceMusic;
     public static AudioMixerGroup NormalMixer;
     public static AudioMixerGroup AdaptationMixer;
 
@@ -30,12 +32,13 @@ public class SoundManager : MonoBehaviour
     {
         deathSound = Resources.Load<AudioClip>("Hit");
         jumpSound = Resources.Load<AudioClip>("Jump");
-        fallSound= Resources.Load<AudioClip>("Fall");
+        fallSound= Resources.Load<AudioClip>("Fall_short");
         dashSound = Resources.Load<AudioClip>("Dash");
         victorySound = Resources.Load<AudioClip>("Victory");
         ememyHitted = Resources.Load<AudioClip>("EmemyHitted");
 
-        audioSource = GetComponent<AudioSource>();
+        audioSourceMusic = GetComponents<AudioSource>().ToList().FirstOrDefault();
+        audioSourceClip = GetComponents<AudioSource>().ToList().LastOrDefault();
 
         if (MusicSections.Length == 0)
         {
@@ -54,38 +57,39 @@ public class SoundManager : MonoBehaviour
         
     }
 
-    public static void SetAdaptationAudioMixer() => audioSource.outputAudioMixerGroup = AdaptationMixer;
+    public static void SetAdaptationAudioMixer() => audioSourceClip.outputAudioMixerGroup = AdaptationMixer;
 
-    public static void SetNormalAudioMixer() => audioSource.outputAudioMixerGroup = NormalMixer;
+    public static void SetNormalAudioMixer() => audioSourceClip.outputAudioMixerGroup = NormalMixer;
 
 
     public static void PlaySound (SoundsEnum clip)
-    {
+    {   
+        if(!AdaptacionesManager.AtenuarSonidos || (AdaptacionesManager.AtenuarSonidos && !audioSourceClip.isPlaying))
         switch (clip)
         {
             case SoundsEnum.Jump:
-                audioSource.PlayOneShot(jumpSound);
+                audioSourceClip.PlayOneShot(jumpSound);
                 break;
             case SoundsEnum.Fall:
-                audioSource.PlayOneShot(fallSound);
+                audioSourceClip.PlayOneShot(fallSound);
                 break;
             case SoundsEnum.Dash:
-                audioSource.PlayOneShot(dashSound);
+                audioSourceClip.PlayOneShot(dashSound);
                 break;
             case SoundsEnum.Hit:
-                audioSource.PlayOneShot(hitSound);
+                audioSourceClip.PlayOneShot(hitSound);
                 break;
             case SoundsEnum.Victory:
-                audioSource.PlayOneShot(victorySound);
+                audioSourceClip.PlayOneShot(victorySound);
                 break;
             case SoundsEnum.Death:
-                audioSource.PlayOneShot(deathSound);
+                audioSourceClip.PlayOneShot(deathSound);
                 break;
             case SoundsEnum.Spawn:
-                audioSource.PlayOneShot(spawnSound);
+                audioSourceClip.PlayOneShot(spawnSound);
                 break;
             case SoundsEnum.EmemyHitted:
-                audioSource.PlayOneShot(ememyHitted);
+                audioSourceClip.PlayOneShot(ememyHitted);
                 break;
             default:
                 break;
@@ -96,16 +100,16 @@ public class SoundManager : MonoBehaviour
     {
         if (preloadBufferActive)
         {
-            audioSource.clip = MusicSections[0];
-            audioSource.Play();
+            audioSourceClip.clip = MusicSections[0];
+            audioSourceClip.Play();
             yield return new WaitForSeconds(MusicSections[0].length);
             preloadBufferActive = false;
         }
         if (playIntro)
         // This is always 'Element 1' and should be assigned to audio files with the 'Intro' identifier. Example track: 'Adventure Inn Section 1 Intro.wav').
         {
-            audioSource.clip = MusicSections[1];
-            audioSource.Play();
+            audioSourceClip.clip = MusicSections[1];
+            audioSourceClip.Play();
 
             Debug.Log("Playing clip: " + MusicSections[1]);
             // Displays the currently playing clip in the editor console.
@@ -121,8 +125,8 @@ public class SoundManager : MonoBehaviour
         if (section != lastPlayed)
         // Ensures we don't play the same section twice!
         {
-            audioSource.clip = MusicSections[section];
-            audioSource.Play();
+            audioSourceClip.clip = MusicSections[section];
+            audioSourceClip.Play();
 
             Debug.Log("Playing clip: " + MusicSections[section]);
             // Displays the currently playing clip in the editor console.
