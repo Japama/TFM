@@ -78,6 +78,8 @@ public class PlayerManager : MonoBehaviour
     {
         //if (!immunity)
         anim.SetTrigger("Herido");
+        SoundManager.PlaySound(SoundsEnum.PlayerHitted);
+
     }
 
     public void Hitted()
@@ -135,6 +137,8 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKey(KeyCode.K))
+            SoundManager.PlaySound(SoundsEnum.Jump);
         if (Time.timeScale != 0)
         {
             if (dashCooldown)
@@ -156,8 +160,8 @@ public class PlayerManager : MonoBehaviour
                 }
                 else
                 {
-                    if (anim.GetBool("Caer"))
-                        SoundManager.PlaySound(SoundsEnum.Fall);
+                    //if (anim.GetBool("Caer"))
+                    //    SoundManager.PlaySound(SoundsEnum.Fall);
                     anim.SetBool("Caer", false);
                 }
 
@@ -376,7 +380,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         if (collision.gameObject.CompareTag("Enemigo") && !immunity)
-            anim.SetTrigger("Herido");
+            GetHit();
 
         if (collision.gameObject.CompareTag("Finish"))
             rb.velocity = new Vector2(0, rb.velocity.y);
@@ -393,9 +397,10 @@ public class PlayerManager : MonoBehaviour
         if (collision.gameObject.CompareTag("Turtle"))
         {
             var tm = collision.gameObject.GetComponent<TurtleManager>();
-            if (!immunity && tm.spikesOut || !dash)
-                anim.SetTrigger("Herido");
-            else
+            //if (!immunity && tm.spikesOut || !dash)
+            if (!immunity && tm.spikesOut)
+                GetHit();
+            else if(!tm.spikesOut)
                 tm.Hitted();
         }
 
@@ -405,7 +410,7 @@ public class PlayerManager : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemigo") && !immunity)
-            anim.SetTrigger("Herido");
+            GetHit();
     }
 
     private void OnTriggerExit2D(Collider2D collision)

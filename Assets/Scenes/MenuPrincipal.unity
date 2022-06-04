@@ -932,7 +932,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 502505712}
+      - m_Target: {fileID: 335935548}
         m_TargetAssemblyTypeName: HowToPlayManage, Assembly-CSharp
         m_MethodName: CloseAll
         m_Mode: 1
@@ -1185,7 +1185,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 502505711}
-  - component: {fileID: 502505712}
   m_Layer: 5
   m_Name: Controles
   m_TagString: Untagged
@@ -1213,22 +1212,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &502505712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 502505710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0be8e9ef842f78e4883ffa33b1c90b6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HowToPlayPanel: {fileID: 441305785}
-  HowToPlayPictograms: {fileID: 0}
-  Controllers: {fileID: 0}
-  ControllersPictogram: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1728,7 +1711,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 787906338}
+      - m_Target: {fileID: 335935548}
         m_TargetAssemblyTypeName: HowToPlayManage, Assembly-CSharp
         m_MethodName: CloseAll
         m_Mode: 1
@@ -1963,7 +1946,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 787906337}
-  - component: {fileID: 787906338}
   m_Layer: 5
   m_Name: Como jugarLetras
   m_TagString: Untagged
@@ -1991,22 +1973,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &787906338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 787906336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0be8e9ef842f78e4883ffa33b1c90b6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HowToPlayPanel: {fileID: 525832060}
-  HowToPlayPictograms: {fileID: 0}
-  Controllers: {fileID: 0}
-  ControllersPictogram: {fileID: 0}
 --- !u!1 &815758808
 GameObject:
   m_ObjectHideFlags: 0
@@ -2358,7 +2324,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1399289339}
+      - m_Target: {fileID: 335935548}
         m_TargetAssemblyTypeName: HowToPlayManage, Assembly-CSharp
         m_MethodName: CloseAll
         m_Mode: 1
@@ -2993,7 +2959,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1399289338}
-  - component: {fileID: 1399289339}
   m_Layer: 5
   m_Name: ControlesPictogramas
   m_TagString: Untagged
@@ -3021,22 +2986,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1399289339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1399289337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0be8e9ef842f78e4883ffa33b1c90b6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HowToPlayPanel: {fileID: 2079617804}
-  HowToPlayPictograms: {fileID: 0}
-  Controllers: {fileID: 0}
-  ControllersPictogram: {fileID: 0}
 --- !u!1 &1419210540
 GameObject:
   m_ObjectHideFlags: 0
@@ -3673,6 +3622,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1249571364031606997, guid: 2d86ed094fbf82c459c486edfa8a5eab, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9172137530268632697, guid: 2d86ed094fbf82c459c486edfa8a5eab, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -4024,7 +3977,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Para ganar hay que encontrar el diamante al final del nivel. Para matar
-    a los monstruos hay que saltar encima de ellos o atarlos por detr\xE1s"
+    a los monstruos hay que saltar encima de ellos o atacarlos por detr\xE1s"
 --- !u!222 &2016622852
 CanvasRenderer:
   m_ObjectHideFlags: 0

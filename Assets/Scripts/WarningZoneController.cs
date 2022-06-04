@@ -23,6 +23,7 @@ public class WarningZoneController : MonoBehaviour
         {
             AvisoEnemigosManager.Instance.SwitchWarningZone(EnemyType, activate: false);
             playerManager.RemoveWarningController(EnemyType);
+            GameObject.Destroy(gameObject);
         }
     }
 

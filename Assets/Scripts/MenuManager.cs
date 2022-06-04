@@ -51,7 +51,7 @@ public class MenuManager : MonoBehaviour
 
     public void IrAlMenu()
     {
-        //ResumeGame();
+        ResumeGame();
         SceneManager.LoadScene("MenuPrincipal");
     }
 
